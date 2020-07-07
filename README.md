@@ -1,6 +1,11 @@
 # YouTubeExtractor
 A helper to extract the streaming URL from a YouTube video using RxJava, Retrofit, Moshi, and others.
 
+## Deprecated
+YouTube changes their page contents too often for this to be a fesible, consistent solution for any app. Please use something like one of these libraries instead.
+- https://developers.google.com/youtube/android/player
+- https://github.com/PierfrancescoSoffritti/android-youtube-player
+
 [![Build Status](https://travis-ci.org/Commit451/YouTubeExtractor.svg?branch=master)](https://travis-ci.org/Commit451/YouTubeExtractor)
 [![](https://jitpack.io/v/Commit451/YouTubeExtractor.svg)](https://jitpack.io/#Commit451/YouTubeExtractor)
 
