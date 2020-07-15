@@ -6,7 +6,9 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 internal data class PlayerResponse(
     @Json(name = "streamingData")
-    var streamingData: StreamingData? = null
+    var streamingData: StreamingData? = null,
+    @Json(name = "videoDetails")
+    var videoDetails: VideoDetails? = null
 ) {
 
     @JsonClass(generateAdapter = true)
@@ -27,7 +29,17 @@ internal data class PlayerResponse(
         var approxDurationMs: String? = null,
         @Json(name = "url")
         var url: String? = null,
-        @Json(name = "cipher")
+        @Json(name = "signatureCipher")
         var cipher: String? = null
+    )
+
+    @JsonClass(generateAdapter = true)
+    data class VideoDetails(
+            @Json(name = "title")
+            var title: String? = null,
+            @Json(name = "author")
+            var author: String? = null,
+            @Json(name = "shortDescription")
+            var description: String? = null
     )
 }
