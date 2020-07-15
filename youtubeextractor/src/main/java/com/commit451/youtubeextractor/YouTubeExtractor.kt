@@ -79,11 +79,11 @@ class YouTubeExtractor private constructor(builder: Builder) {
             val streams = parseStreams(playerResponse, playerUrl)
             val extraction = YouTubeExtraction(
                 videoId = videoId,
-                title = title(playerArgs, doc),
+                title = title(playerResponse, doc),
                 streams = streams,
                 thumbnails = extractThumbnails(videoId),
-                author = author(playerArgs, doc),
-                description = descriptionFromHtml(doc),
+                author = author(playerResponse, doc),
+                description = description(playerResponse, doc),
                 viewCount = viewCountFromHtml(doc),
                 durationMilliseconds = playerResponse.streamingData?.formats?.find { it.approxDurationMs != null }?.approxDurationMs?.toLong()
             )
@@ -91,8 +91,8 @@ class YouTubeExtractor private constructor(builder: Builder) {
         }
     }
 
-    private fun title(playerArgs: PlayerArgs, doc: Document): String? {
-        return playerArgs.title ?: titleFromHtml(doc)
+    private fun title(response: PlayerResponse, doc: Document): String? {
+        return response.videoDetails?.title ?: titleFromHtml(doc)
     }
 
     private fun titleFromHtml(doc: Document): String? {
@@ -101,14 +101,18 @@ class YouTubeExtractor private constructor(builder: Builder) {
         }
     }
 
-    private fun author(playerArgs: PlayerArgs, doc: Document): String? {
-        return playerArgs.author ?: authorFromHtml(doc)
+    private fun author(response: PlayerResponse, doc: Document): String? {
+        return response.videoDetails?.author ?: authorFromHtml(doc)
     }
 
     private fun authorFromHtml(doc: Document): String? {
         return tryIgnoringException {
-            doc.select("div.yt-user-info").first().text();
+            doc.select("div.yt-user-info").first().text()
         }
+    }
+
+    private fun description(response: PlayerResponse, doc: Document): String? {
+        return response.videoDetails?.description ?: descriptionFromHtml(doc)
     }
 
     private fun descriptionFromHtml(doc: Document): String? {
